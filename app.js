@@ -68,8 +68,9 @@ const refs = {
   galleryContainer: document.querySelector('.js-gallery'),
   lightboxEl: document.querySelector('.js-lightbox'),
   lightboxOverlayEl: document.querySelector('.lightbox__overlay'),
+  lightBoxContent: document.querySelector('.lightbox__content'),
   lightboxImageEl: document.querySelector('.lightbox__image'),
-  lightboxButtonEl: document.querySelector('[data-action="close-lightbox"]'),  
+  lightboxButtonEl: document.querySelector('[data-action="close-lightbox"]'), 
 }
 
 // 1. Создание и рендер разметки по массиву данных galleryItems из app.js и предоставленному шаблону.
@@ -112,6 +113,7 @@ function onGalleryItemClick(evt) {
 function onModalOpen() {
   window.addEventListener('keydown', onEscPress);
   refs.lightboxEl.classList.add('is-open');
+  
 }
 
 // 4. Подмена значения атрибута src элемента img.lightbox__image
@@ -151,5 +153,37 @@ function onEscPress(evt) {
     onModalClose();
   } 
 }
+
 // 9. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
+// refs.lightBoxContent.insertAdjacentHTML('beforeend', `<button class="gallery__button-left"><</button>`);
+// refs.lightBoxContent.insertAdjacentHTML('beforeend', `<button class="gallery__button-right">></button>`);
+
+// const btnLeft = document.querySelector('.gallery__button-left');
+// const btnRight = document.querySelector('.gallery__button-right');
+// const galleryImage = document.querySelector('.gallery__image');
+
+// btnLeft.addEventListener('click', onLeftBtnClick);
+// btnRight.addEventListener('click', onRightBtnClick);
+
+// const arrayOfImages = document.getElementsByClassName('gallery__image')
+
+// let slideIndex = 0;
+
+// function onRightBtnClick() {
+//   slideIndex += 1;
+//   if (slideIndex >= arrayOfImages.length) {
+//     slideIndex = 0
+//   }
+//   refs.lightboxImageEl.src = arrayOfImages[slideIndex].original;
+//   refs.lightboxImageEl.alt = arrayOfImages[slideIndex].description;
+
+// }
+
+// function onLeftBtnClick() {
+//   if (slideIndex < 0) {
+//     slideIndex = arrayOfImages.length - 1;
+//   }
+//   refs.lightboxImageEl.src = arrayOfImages[slideIndex].src;
+//   refs.lightboxImageEl.alt = arrayOfImages[slideIndex].alt;
+// }
