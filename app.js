@@ -92,39 +92,32 @@ function createGalleryMarkup(items) {
 };
 
 // 2. Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
-
 refs.galleryContainer.addEventListener('click', onGalleryItemClick);
 
 function onGalleryItemClick(evt) {
   evt.preventDefault();
-
   const isGalleryImage = evt.target.classList.contains('gallery__image');
   if (!isGalleryImage) {
     return
   }
-  // console.log(evt.target.dataset.source);
-  onModalOpen();
 
+  onModalOpen();
   getImageAttribute(evt.target.dataset.source, evt.target.alt);
 }
 
 // 3. Открытие модального окна по клику на элементе галереи.
-
 function onModalOpen() {
   window.addEventListener('keydown', onEscPress);
   refs.lightboxEl.classList.add('is-open');
-  
 }
 
 // 4. Подмена значения атрибута src элемента img.lightbox__image
-
 function getImageAttribute(src, alt) {
   refs.lightboxImageEl.src = src;
   refs.lightboxImageEl.alt = alt;
 }
 
 // 5. Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"]
-
 refs.lightboxButtonEl.addEventListener('click', onModalClose);
 
 function onModalClose() {
@@ -138,16 +131,13 @@ function onModalClose() {
 }
 
 // 7. Закрытие модального окна по клику на div.lightbox__overlay.
-
 refs.lightboxOverlayEl.addEventListener('click', onBackdropClick);
-
 function onBackdropClick(evt) {
   if (evt.target === evt.currentTarget) {
       onModalClose();
   }
 }
 // 8. Закрытие модального окна по нажатию клавиши ESC.
-
 function onEscPress(evt) {
   if (evt.code === 'Escape') {
     onModalClose();
@@ -167,6 +157,8 @@ function onEscPress(evt) {
 // btnRight.addEventListener('click', onRightBtnClick);
 
 // const arrayOfImages = document.getElementsByClassName('gallery__image')
+// console.log(arrayOfImages);
+
 
 // let slideIndex = 0;
 
@@ -175,15 +167,19 @@ function onEscPress(evt) {
 //   if (slideIndex >= arrayOfImages.length) {
 //     slideIndex = 0
 //   }
-//   refs.lightboxImageEl.src = arrayOfImages[slideIndex].original;
-//   refs.lightboxImageEl.alt = arrayOfImages[slideIndex].description;
+//   showImage();
 
 // }
 
 // function onLeftBtnClick() {
+//   slideIndex -= 1;
 //   if (slideIndex < 0) {
 //     slideIndex = arrayOfImages.length - 1;
 //   }
+//   showImage();
+// }
+
+// function showImage() {
 //   refs.lightboxImageEl.src = arrayOfImages[slideIndex].src;
 //   refs.lightboxImageEl.alt = arrayOfImages[slideIndex].alt;
 // }
