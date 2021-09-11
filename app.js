@@ -146,40 +146,38 @@ function onEscPress(evt) {
 
 // 9. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
-// refs.lightBoxContent.insertAdjacentHTML('beforeend', `<button class="gallery__button-left"><</button>`);
-// refs.lightBoxContent.insertAdjacentHTML('beforeend', `<button class="gallery__button-right">></button>`);
+refs.lightBoxContent.insertAdjacentHTML('beforeend', `<button class="gallery__button-left"><</button>`);
+refs.lightBoxContent.insertAdjacentHTML('beforeend', `<button class="gallery__button-right">></button>`);
 
-// const btnLeft = document.querySelector('.gallery__button-left');
-// const btnRight = document.querySelector('.gallery__button-right');
-// const galleryImage = document.querySelector('.gallery__image');
+const btnLeft = document.querySelector('.gallery__button-left');
+const btnRight = document.querySelector('.gallery__button-right');
+const galleryImage = document.querySelector('.gallery__image');
 
-// btnLeft.addEventListener('click', onLeftBtnClick);
-// btnRight.addEventListener('click', onRightBtnClick);
+btnLeft.addEventListener('click', onLeftBtnClick);
+btnRight.addEventListener('click', onRightBtnClick);
 
-// const arrayOfImages = document.getElementsByClassName('gallery__image')
-// console.log(arrayOfImages);
+const arrayOfImages = document.getElementsByClassName('gallery__image')
+console.log(arrayOfImages);
 
+let slideIndex = 0;
 
-// let slideIndex = 0;
+function onRightBtnClick() {
+  slideIndex += 1;
+  if (slideIndex >= arrayOfImages.length) {
+    slideIndex = 0
+  }
+  showImage();
+}
 
-// function onRightBtnClick() {
-//   slideIndex += 1;
-//   if (slideIndex >= arrayOfImages.length) {
-//     slideIndex = 0
-//   }
-//   showImage();
+function onLeftBtnClick() {
+  slideIndex -= 1;
+  if (slideIndex < 0) {
+    slideIndex = arrayOfImages.length - 1;
+  }
+  showImage();
+}
 
-// }
-
-// function onLeftBtnClick() {
-//   slideIndex -= 1;
-//   if (slideIndex < 0) {
-//     slideIndex = arrayOfImages.length - 1;
-//   }
-//   showImage();
-// }
-
-// function showImage() {
-//   refs.lightboxImageEl.src = arrayOfImages[slideIndex].src;
-//   refs.lightboxImageEl.alt = arrayOfImages[slideIndex].alt;
-// }
+function showImage() {
+  refs.lightboxImageEl.src = arrayOfImages[slideIndex].dataset.source;
+  refs.lightboxImageEl.alt = arrayOfImages[slideIndex].alt;
+}
