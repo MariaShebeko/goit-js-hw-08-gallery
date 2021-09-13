@@ -138,13 +138,3 @@ body {
 .lightbox__button:focus {
   background-color: rgba(0, 0, 0, 0.5);
 }
-
-.gallery__button-left,
-.gallery__button-right {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: transparent;
-  color: #fff;
-  cursor: pointer;
-}
