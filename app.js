@@ -73,7 +73,6 @@ const refs = {
   lightboxButtonEl: document.querySelector('[data-action="close-lightbox"]'),
 };
 
-// 1. Создание и рендер разметки по массиву данных galleryItems из app.js и предоставленному шаблону.
 const galleryMarkup = createGalleryMarkup(galleryItems);
 refs.galleryContainer.insertAdjacentHTML("beforeend", galleryMarkup);
 
@@ -93,7 +92,6 @@ function createGalleryMarkup(items) {
     .join("");
 }
 
-// 2. Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
 refs.galleryContainer.addEventListener("click", onGalleryItemClick);
 
 function onGalleryItemClick(evt) {
@@ -102,39 +100,29 @@ function onGalleryItemClick(evt) {
   if (!isGalleryImage) {
     return;
   }
-
   onModalOpen();
   getImageAttribute(evt.target.dataset.source, evt.target.alt);
 }
 
-// 3. Открытие модального окна по клику на элементе галереи.
 function onModalOpen() {
-  window.addEventListener("keydown", onEscPress);
-  window.addEventListener("keydown", onRightArrowClick);
-  window.addEventListener("keydown", onLeftArrowClick);
+  window.addEventListener("keydown", keyPress);
   refs.lightboxEl.classList.add("is-open");
 }
 
-// 4. Подмена значения атрибута src элемента img.lightbox__image
 function getImageAttribute(src, alt) {
   refs.lightboxImageEl.src = src;
   refs.lightboxImageEl.alt = alt;
 }
 
-// 5. Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"]
 refs.lightboxButtonEl.addEventListener("click", onModalClose);
 
 function onModalClose() {
-  window.removeEventListener("keydown", onEscPress);
+  window.removeEventListener("keydown", keyPress);
   refs.lightboxEl.classList.remove("is-open");
 
-  // 6. Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для
-  // того, чтобы при следующем открытии модального окна, пока грузится изображение, мы
-  // не видели предыдущее.
   getImageAttribute("", "");
 }
 
-// 7. Закрытие модального окна по клику на div.lightbox__overlay.
 refs.lightboxOverlayEl.addEventListener("click", onBackdropClick);
 function onBackdropClick(evt) {
   if (evt.target === evt.currentTarget) {
@@ -142,41 +130,43 @@ function onBackdropClick(evt) {
   }
 }
 
-// 8. Закрытие модального окна по нажатию клавиши ESC.
-function onEscPress(evt) {
+function keyPress(evt) {
   if (evt.code === "Escape") {
     onModalClose();
   }
-}
-
-// 9. Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
-
-const arrayOfImages = document.getElementsByClassName("gallery__image");
-let imageIndex = galleryItems.findIndex(
-  (image) => image.original === refs.lightboxImageEl.src
-);
-
-function onRightArrowClick(evt) {
   if (evt.code === "ArrowRight") {
-    if (imageIndex === galleryItems.length - 1) {
-      imageIndex = -1;
-    }
-    imageIndex += 1;
+    onRightArrowClick();
   }
-  showImage();
-}
-
-function onLeftArrowClick(evt) {
   if (evt.code === "ArrowLeft") {
-    if (imageIndex === 0) {
-      imageIndex += galleryItems.length;
-    }
-    imageIndex -= 1;
+    onLeftArrowClick();
   }
-  showImage();
 }
 
-function showImage() {
-  refs.lightboxImageEl.src = galleryItems[imageIndex].original;
-  refs.lightboxImageEl.alt = galleryItems[imageIndex].description;
+function onRightArrowClick() {
+  const indexOfCurrentImage = galleryItems.findIndex(
+    (image) => image.original === refs.lightboxImageEl.src
+  );
+  if (indexOfCurrentImage !== galleryItems.length - 1) {
+    refs.lightboxImageEl.src = galleryItems[indexOfCurrentImage + 1].original;
+    refs.lightboxImageEl.alt =
+      galleryItems[indexOfCurrentImage + 1].description;
+  } else {
+    refs.lightboxImageEl.src = galleryItems[0].original;
+    refs.lightboxImageEl.alt = galleryItems[0].description;
+  }
+}
+
+function onLeftArrowClick() {
+  const indexOfCurrentImage = galleryItems.findIndex(
+    (image) => image.original === refs.lightboxImageEl.src
+  );
+  if (indexOfCurrentImage !== 0) {
+    refs.lightboxImageEl.src = galleryItems[indexOfCurrentImage - 1].original;
+    refs.lightboxImageEl.alt =
+      galleryItems[indexOfCurrentImage - 1].description;
+  } else {
+    refs.lightboxImageEl.src = galleryItems[galleryItems.length - 1].original;
+    refs.lightboxImageEl.alt =
+      galleryItems[galleryItems.length - 1].description;
+  }
 }
